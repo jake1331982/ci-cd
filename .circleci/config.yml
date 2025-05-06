@@ -1,0 +1,30 @@
+version: 2.1
+
+commands:
+  run-tests:
+    steps:
+      - checkout
+      - run:
+          name: Run tests
+          command: |
+            echo "Running tests..."
+            # Add your test commands here
+
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.8
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: |
+            echo "Installing dependencies..."
+            # Add your dependency installation commands here
+
+workflow:
+    jobs:
+      - build
+      - run-tests:
+          requires:
+            - build
