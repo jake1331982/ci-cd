@@ -15,6 +15,7 @@ jobs:
       - setup_remote_docker:
           docker_layer_caching: true
       - checkout
+      - run : docker build -t $DOCKERHUB_USERNAME/circle-ci .
       - run : docker push $DOCKERHUB_USERNAME/circle-ci:latest    
 
 
