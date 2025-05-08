@@ -3,7 +3,7 @@ version: 2.1
 commands:
   install-aws-cli:
     steps:
-      - run: echo install -aws cli
+      - run: echoa install -aws cli
       - checkout
       - run: ls -la
 
