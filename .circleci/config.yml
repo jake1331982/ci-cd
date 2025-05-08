@@ -1,21 +1,20 @@
-version:2.1
+version: 2.1
 
 commands:
   install-aws-cli:
     steps:
-        - run:  echo install -aws cli
-        - run: checkout
-        - run ls -la
+      - run: echo install -aws cli
+      - checkout
+      - run: ls -la
+
 jobs:
   install-dependencias:
     docker:
-      - image::cimg/base:stable
-    steps:  
+      - image: cimg/base:stable
+    steps:
       - install-aws-cli
-
 
 workflows:
   workflow1:
-    jobs:  
+    jobs:
       - install-dependencias
-    
