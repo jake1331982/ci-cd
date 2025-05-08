@@ -6,6 +6,7 @@ commands:
       - run: echo install -aws cliente
       - checkout
       - run: ls -la
+      - run: echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
 jobs:
   install-dependencias:
