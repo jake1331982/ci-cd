@@ -4,8 +4,6 @@ commands:
   install-aws-cli:
     steps:
       - run: echo install -aws cliente
-      - checkout
-      - run: ls -la
       - run: echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
 jobs:
@@ -16,6 +14,12 @@ jobs:
       - install-aws-cli
       - setup_remote_docker:
           docker_layer_caching: true
+      - checkout:
+      - run : docker push $DOCKERHUB_USERNAME/circle-ci:latest    
+
+
+
+
 
 workflows:
   workflow1:
