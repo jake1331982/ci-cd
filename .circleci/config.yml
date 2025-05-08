@@ -3,9 +3,16 @@ version: 2.1
 commands:
   install-aws-cli:
     steps:
-      - run: echo install -aws cli
+      - run: echo install -aws cliente
       - checkout
       - run: ls -la
+      - run:
+          name: Docker Login
+          command: |
+            if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_TOKEN" ]; then
+              echo "DOCKERHUB_USERNAME or DOCKERHUB_TOKEN is not set. Please set them in your project environment variables or context." && exit 1
+            fi
+            echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
 
 jobs:
   install-dependencias:
