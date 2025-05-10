@@ -1,17 +1,20 @@
 version: 2.1
 
+orbs:
+  aws-cli: circleci/aws-cli@2.0.1
+  docker: circleci/docker@2.0.0 
 commands:
   install-aws-cli:
     steps:
-      - run: echo install -aws cliente
       - run: echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
 
 jobs:
   install-dependencias:
+    executor: aws-cli/default
     docker:
       - image: cimg/base:stable
     steps:
-      - install-aws-cli
+      - run: aws-cli/default
       - setup_remote_docker:
           docker_layer_caching: true
       - checkout
@@ -25,4 +28,7 @@ jobs:
 workflows:
   workflow1:
     jobs:
-      - install-dependencias
+      - install-dependencias:
+         context: aws-credential
+       
+        
