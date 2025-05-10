@@ -21,6 +21,7 @@ jobs:
       - docker/build:
           image: webcircle
           tag: latest
+          dockerfile: Dockerfile
       - docker/push:
           image: webcircle
           tag: latest
