@@ -1,27 +1,25 @@
 version: 2.1
 
-commands:
-  install-aws-cli:
-    steps:
-      - run: echo install -aws cliente
-      - checkout
-      - run: ls -la
-      - run:
-          name: Docker Login
-          command: |
-            if [ -z "$DOCKERHUB_USERNAME" ] || [ -z "$DOCKERHUB_TOKEN" ]; then
-              echo "DOCKERHUB_USERNAME or DOCKERHUB_TOKEN is not set. Please set them in your project environment variables or context." && exit 1
-            fi
-            echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USERNAME" --password-stdin
+orbs:
+  aws-cli: circleci/aws-cli@5.3.2
+  docker: circleci/docker@2.0.0 
 
 jobs:
-  install-dependencias:
-    docker:
-      - image: cimg/base:stable
+  all:
+    executor: aws-cli/default
     steps:
-      - install-aws-cli
+      - aws-cli/setup
+      - run:
+          name: Get AWS caller identity
+          command: |
+            if [ -z "$AWS_REGION" ] || [ "$AWS_REGION" = "" ]; then
+              echo "AWS_REGION is not set. Defaulting to us-east-1."
+              export AWS_REGION=us-east-1
+            fi
+            aws sts get-caller-identity
 
 workflows:
   workflow1:
     jobs:
-      - install-dependencias
+      - all:
+          context: aws-credential
