@@ -15,18 +15,13 @@ jobs:
   docker:
     executor: docker/machine 
     steps:
-      - checkout
       - docker/install-docker
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - checkout
       - run: echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
-      - docker/build:
-          image: webcircle
-          tag: latest
-          dockerfile: Dockerfile
-      - docker/push:
-          image: webcircle
-          tag: latest
-          registry: wako1982/circle-ci
-             
+      - run : docker build -t $DOCKERHUB_USERNAME/circle-ci .
+      - run : docker push $DOCKERHUB_USERNAME/circle-ci:latest
 
 
 workflows:
