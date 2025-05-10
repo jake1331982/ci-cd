@@ -24,6 +24,7 @@ jobs:
       - docker/push:
           image: webcircle
           tag: latest
+          registry: wako1982/circle-ci
              
 
 
