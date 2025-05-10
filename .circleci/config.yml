@@ -1,25 +1,33 @@
 version: 2.1
 
 orbs:
-  aws-cli: circleci/aws-cli@5.3.2
-  docker: circleci/docker@2.0.0 
+  aws-cli: circleci/aws-cli@3.1.5
+  docker: circleci/docker@2.8.2
 
 jobs:
-  all:
+  aws:
     executor: aws-cli/default
     steps:
       - aws-cli/setup
-      - run:
-          name: Get AWS caller identity
-          command: |
-            if [ -z "$AWS_REGION" ] || [ "$AWS_REGION" = "" ]; then
-              echo "AWS_REGION is not set. Defaulting to us-east-1."
-              export AWS_REGION=us-east-1
-            fi
-            aws sts get-caller-identity
+      - run: aws sts get-caller-identity
+  docker:
+    executor: docker/machine
+    steps:
+      - checkout
+      - docker/install-docker
+      - run: echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      - docker/build:
+          image: wako1982/circle-ci/webcircle
+          tag: latest
+      - docker/push:
+          image: wako1982/circle-ci/webcircle
+          tag: latest
+          registry: docker.io
 
 workflows:
   workflow1:
     jobs:
-      - all:
+      - aws:
           context: aws-credential
+      - docker:
+          context: docker-credential
