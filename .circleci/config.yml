@@ -18,6 +18,11 @@ jobs:
       - checkout
       - docker/install-docker
       - run: echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+      - docker/build:
+          image: webcircle
+      - docker/push:
+          image: webcircle
+          tag: latest    
 
 
 workflows:
