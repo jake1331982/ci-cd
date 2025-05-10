@@ -20,9 +20,11 @@ jobs:
       - run: echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
       - docker/build:
           image: webcircle
+          tag: latest
       - docker/push:
           image: webcircle
-          tag: latest    
+          tag: latest
+             
 
 
 workflows:
