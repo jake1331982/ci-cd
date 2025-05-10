@@ -9,7 +9,7 @@ jobs:
     executor: aws-cli/default
     steps:
       - aws-cli/setup
-      - run : aws sts get-caller-identity
+      - run: aws sts get-caller-identity
 
 
 workflows:
