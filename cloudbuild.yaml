@@ -2,23 +2,11 @@ options:
   logging: CLOUD_LOGGING_ONLY
 
 steps:
-  # Paso 1: Construir imagen Docker
   - name: 'gcr.io/cloud-builders/docker'
-    args:
-      [
-        'build',
-        '-t',
-        'us-central1-docker.pkg.dev/574929203103/wako/web:latest',
-        '.'
-      ]
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/wako/web:latest', '.']
 
-  # Paso 2: Hacer push de la imagen al Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args:
-      [
-        'push',
-        'us-central1-docker.pkg.dev/574929203103/wako/web:latest'
-      ]
+    args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/wako/web:latest']
 
 images:
-  - 'us-central1-docker.pkg.dev/574929203103/wako/web:latest'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/wako/web:latest'
