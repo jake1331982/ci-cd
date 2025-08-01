@@ -1,6 +1,6 @@
 options:
   logging: CLOUD_LOGGING_ONLY
-  logsBucket: gs://cloudbuild-logs-wako
+  logsBucket: gs://cloudbuild-logs-wakos
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
