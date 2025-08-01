@@ -1,6 +1,6 @@
 options:
   logging: CLOUD_LOGGING_ONLY
-   logsBucket: gs://cloudbuild-logs-wakos
+  logsBucket: gs://cloudbuild-logs-wako
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
@@ -10,4 +10,4 @@ steps:
     args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/wako-docker/web:latest']
 
 images:
-  - 'us-central1-docker.pkg.dev/$PROJECT_ID/wako/web:latest'
+  - 'us-central1-docker.pkg.dev/$PROJECT_ID/wako-docker/web:latest'
