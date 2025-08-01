@@ -1,6 +1,6 @@
 options:
   logging: CLOUD_LOGGING_ONLY
-   logsBucket: gs://logs-bindplane
+   logsBucket: gs://cloudbuild-logs-wakos
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
